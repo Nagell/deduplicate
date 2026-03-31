@@ -39,11 +39,6 @@ public sealed partial class MainPage : Page
         ViewModel.CancelScan();
     }
 
-    private void FileCheckBox_Changed(object sender, RoutedEventArgs e)
-    {
-        ViewModel.UpdateSelectionCount();
-    }
-
     private void OpenFile_Click(object sender, RoutedEventArgs e)
     {
         if (sender is Button btn && btn.Tag is string path)

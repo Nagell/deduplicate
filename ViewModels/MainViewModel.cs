@@ -153,6 +153,7 @@ public class MainViewModel : ObservableObject
         _hasEmptyFolder = false;
         ErrorMessage = null;
         CurrentProgress = null;
+        UnsubscribeAllItems();
         DuplicateGroups.Clear();
         _selectedFileCount = 0;
         _selectedBytes = 0;
@@ -173,7 +174,11 @@ public class MainViewModel : ObservableObject
                 token);
 
             foreach (var g in groups)
+            {
                 DuplicateGroups.Add(g);
+                foreach (var item in g.Items)
+                    item.PropertyChanged += OnFileItemPropertyChanged;
+            }
 
             _hasBeenScanned = true;
 
@@ -229,6 +234,7 @@ public class MainViewModel : ObservableObject
     {
         foreach (var file in files)
         {
+            file.PropertyChanged -= OnFileItemPropertyChanged;
             try { File.Delete(file.Path); }
             catch { /* skip files that can't be deleted */ }
         }
@@ -256,5 +262,18 @@ public class MainViewModel : ObservableObject
     {
         OnPropertyChanged(nameof(HasSelection));
         OnPropertyChanged(nameof(StatusText));
+    }
+
+    private void OnFileItemPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(FileItem.IsSelected))
+            UpdateSelectionCount();
+    }
+
+    private void UnsubscribeAllItems()
+    {
+        foreach (var group in DuplicateGroups)
+            foreach (var item in group.Items)
+                item.PropertyChanged -= OnFileItemPropertyChanged;
     }
 }

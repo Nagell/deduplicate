@@ -195,8 +195,6 @@
                             <CheckBox
                                 Grid.Column="0"
                                 IsChecked="{x:Bind IsSelected, Mode=TwoWay}"
-                                Checked="FileCheckBox_Changed"
-                                Unchecked="FileCheckBox_Changed"
                                 VerticalAlignment="Center"
                                 Margin="0"/>
 
@@ -294,13 +292,15 @@
                     Content="Delete Selected"
                     IsEnabled="{x:Bind ViewModel.HasSelection, Mode=OneWay}"
                     Click="DeleteSelected_Click"
+                    Background="#C42B1C"
+                    Foreground="White"
                     Padding="20,10">
-                    <Button.Style>
-                        <Style TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}">
-                            <Setter Property="Background" Value="{ThemeResource SystemFillColorCriticalBrush}"/>
-                            <Setter Property="Foreground" Value="White"/>
-                        </Style>
-                    </Button.Style>
+                    <Button.Resources>
+                        <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="#D13425"/>
+                        <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="#A3231A"/>
+                        <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="White"/>
+                        <SolidColorBrush x:Key="ButtonForegroundPressed" Color="White"/>
+                    </Button.Resources>
                 </Button>
             </Grid>
         </Border>
