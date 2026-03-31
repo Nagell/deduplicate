@@ -1,0 +1,152 @@
+[![CC BY-NC 4.0 License](https://img.shields.io/badge/License-CC%20BY--NC%204.0-lightgrey.svg?style=for-the-badge)](LICENSE)
+[![.NET 9](https://img.shields.io/badge/.NET-9-512BD4?style=for-the-badge&logo=dotnet&logoColor=white)](https://dotnet.microsoft.com/)
+[![Windows App SDK](https://img.shields.io/badge/Windows%20App%20SDK-1.6-0078D4?style=for-the-badge&logo=windows&logoColor=white)](https://learn.microsoft.com/en-us/windows/apps/windows-app-sdk/)
+[![LinkedIn](https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555)](https://www.linkedin.com/in/dawidnitka)
+
+<div align="center">
+  <h3 align="center">deduplicate</h3>
+  <p align="center">
+    A fast, native Windows 11 duplicate file finder — no installation required
+    <br />
+    <a href="https://github.com/Nagell/deduplicate/issues/new?labels=bug">Report Bug</a>
+    ·
+    <a href="https://github.com/Nagell/deduplicate/issues/new?labels=enhancement">Request Feature</a>
+  </p>
+</div>
+
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#commands">Commands</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#license">License</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ol>
+</details>
+
+## About The Project
+
+A native Windows 11 duplicate file finder built with WinUI 3. Scan a folder with one of three detection methods, review grouped results, and bulk-delete duplicates — all without installing anything on the end user's machine.
+
+**Detection methods:**
+
+- **Quick** *(recommended)* — groups by filename + file size, instant results
+- **Smart** — pre-filters by size, then confirms with MD5 hash
+- **Full MD5** — hashes every file regardless of size
+
+Hash-based scans show live progress (MB/s + ETA) and can be cancelled at any time, returning the partial results found so far.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+### Built With
+
+- [![WinUI 3](https://img.shields.io/badge/WinUI%203-0078D4?style=for-the-badge&logo=windows&logoColor=white)](https://learn.microsoft.com/en-us/windows/apps/winui/winui3/)
+- [![.NET 9](https://img.shields.io/badge/.NET-9-512BD4?style=for-the-badge&logo=dotnet&logoColor=white)](https://dotnet.microsoft.com/)
+- [![C#](https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=csharp&logoColor=white)](https://learn.microsoft.com/en-us/dotnet/csharp/)
+- [![Windows App SDK](https://img.shields.io/badge/Windows%20App%20SDK-1.6-0078D4?style=for-the-badge&logo=windows&logoColor=white)](https://learn.microsoft.com/en-us/windows/apps/windows-app-sdk/)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Getting Started
+
+### Prerequisites
+
+- [.NET 9 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/9.0)
+- Windows 10 version 1809 or later (Windows 11 recommended for Mica backdrop)
+
+### Installation
+
+1. Clone the repository
+   ```sh
+   git clone https://github.com/Nagell/deduplicate.git
+   ```
+
+2. Restore dependencies
+   ```sh
+   dotnet restore
+   ```
+
+3. Build the project
+   ```sh
+   dotnet build
+   ```
+
+4. Run the application
+   ```sh
+   dotnet run
+   ```
+
+> No MSIX packaging or Visual Studio required — the app runs unpackaged directly from the build output.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Commands
+
+| Command | Description |
+|---|---|
+| `dotnet build` | Compile the project |
+| `dotnet run` | Build and launch the app |
+| `dotnet watch run` | Launch with .NET Hot Reload (C# changes applied live) |
+| `dotnet clean` | Remove build artifacts |
+
+**VS Code shortcuts**
+
+| Shortcut | Action |
+|---|---|
+| `Ctrl+Shift+B` | Build |
+| `F5` | Debug (attach debugger, breakpoints) |
+| `Ctrl+Shift+P` → `Tasks: Run Task` | Run / Watch / Clean |
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Roadmap
+
+- [x] WinUI 3 unpackaged app (no installer for end users)
+- [x] Quick scan — name + size matching
+- [x] Smart scan — size pre-filter + MD5 confirmation
+- [x] Full MD5 scan
+- [x] Recursive scanning with toggle
+- [x] Cancellable hash scans with live progress (MB/s + ETA)
+- [x] Partial results returned on cancel
+- [x] Grouped results view
+- [x] Open File / Open Folder buttons per result
+- [x] Per-file checkboxes with bulk selection
+- [x] Delete selected with confirmation dialog
+- [x] Warning when all copies of a group are selected
+- [x] Mica backdrop + custom title bar (Windows 11)
+- [x] Error handling with user-facing messages
+- [x] Status bar showing group count, extra files, and reclaimable space
+- [x] Selection statistics footer (files selected · space to free)
+- [ ] Export results to CSV
+- [ ] Exclusion patterns (glob / regex)
+- [ ] Minimum file size filter
+- [ ] Move to folder instead of delete
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## License
+
+Distributed under the CC BY-NC 4.0 License. See `LICENSE` for more information.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Contact
+
+Dawid Nitka — [LinkedIn](https://www.linkedin.com/in/dawidnitka)
+
+Project Link: [https://github.com/Nagell/deduplicate](https://github.com/Nagell/deduplicate)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>

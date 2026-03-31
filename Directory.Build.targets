@@ -1,0 +1,26 @@
+<Project>
+  <!--
+    Override Visual Studio–only packaging/PRI targets that require
+    Microsoft.Build.AppxPackage.dll and Microsoft.Build.Packaging.Pri.Tasks.dll.
+    These DLLs ship with Visual Studio and are not present in a CLI-only environment.
+    Overriding them with empty stubs lets dotnet build succeed without VS installed.
+    The app compiles and runs correctly without PRI/packaging outputs.
+  -->
+
+  <Target Name="GetMrtPackagingOutputs"          Returns="@(PackagingOutputs)" />
+  <Target Name="GetOptionalProjectOutputs"        Returns="@(OptionalProjectOutputs)" />
+  <Target Name="CopyLocalFilesOutputGroup"        Returns="@(CopyLocalFilesOutputGroupOutput)" />
+  <Target Name="GetCopyToOutputDirectoryItemsOutputGroup" Returns="@(GetCopyToOutputDirectoryItemsOutputGroupOutput)" />
+  <Target Name="OptionalProjectsOutputGroup"      Returns="@(OptionalProjectsOutputGroupOutput)" />
+  <Target Name="ComFilesOutputGroup"              Returns="@(ComFilesOutputGroupOutput)" />
+  <Target Name="_GetDefaultResourceLanguage" />
+  <Target Name="_GenerateProjectPriFile" />
+  <Target Name="_GeneratePrisForPortableLibraries" />
+  <Target Name="_GenerateProjectPriConfigurationFiles" />
+  <Target Name="_GenerateProjectPriFileCore" />
+  <Target Name="_GetPackageArchitecture" />
+  <Target Name="_ValidateConfiguration" />
+  <Target Name="_MrtCoreUpToDateCheckInput" />
+  <Target Name="_MrtCoreUpToDateCheckBuilt" />
+  <Target Name="AddPriPayloadFilesToCopyToOutputDirectoryItems" />
+</Project>
