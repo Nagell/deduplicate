@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.6](https://github.com/Nagell/deduplicate/compare/v0.1.5...v0.1.6) (2026-04-01)
+
+
+### Bug Fixes
+
+* include XBF files in publish output so app starts correctly ([c1d2504](https://github.com/Nagell/deduplicate/commit/c1d25049823a2bec28dbe16a9c28d5f3a1d3ca40))
+
 ## [0.1.5](https://github.com/Nagell/deduplicate/compare/v0.1.4...v0.1.5) (2026-04-01)
 
 
