@@ -121,9 +121,9 @@ public class MainViewModel : ObservableObject
             {
                 var total = DuplicateGroups.Sum(g => g.Items.Count - 1);
                 var wasted = DuplicateGroups.Sum(g => g.WastedBytes);
-                return $"{DuplicateGroups.Count} duplicate groups    ·    {total} extra files    ·    {FileSizeFormatter.FormatBytes(wasted)} reclaimable";
+                return $"{DuplicateGroups.Count} duplicate groups\n{total} extra files\n{FileSizeFormatter.FormatBytes(wasted)} reclaimable";
             }
-            return $"{_selectedFileCount} files selected · {FileSizeFormatter.FormatBytes(_selectedBytes)} to free";
+            return $"{_selectedFileCount} files selected\n{FileSizeFormatter.FormatBytes(_selectedBytes)} to free";
         }
     }
 
