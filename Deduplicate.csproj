@@ -10,9 +10,8 @@
     <Version>0.1.0</Version>
     <UseWinUI>true</UseWinUI>
     <WindowsPackageType>None</WindowsPackageType>
+    <EnableMsixTooling>true</EnableMsixTooling>
     <Nullable>enable</Nullable>
-    <DisableMrtSupport>true</DisableMrtSupport>
-    <AppxGeneratePriEnabled>false</AppxGeneratePriEnabled>
     <IncludeCopyLocalFilesOutputGroup>false</IncludeCopyLocalFilesOutputGroup>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
