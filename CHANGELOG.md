@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.3](https://github.com/Nagell/deduplicate/compare/v0.1.2...v0.1.3) (2026-04-01)
+
+
+### Bug Fixes
+
+* enable MSIX tooling for single-file publish support ([52688d9](https://github.com/Nagell/deduplicate/commit/52688d9f97de953066ce8fafd8856d6a420ac970))
+
 ## [0.1.2](https://github.com/Nagell/deduplicate/compare/v0.1.1...v0.1.2) (2026-04-01)
 
 
