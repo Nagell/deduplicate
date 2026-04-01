@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.4](https://github.com/Nagell/deduplicate/compare/v0.1.3...v0.1.4) (2026-04-01)
+
+
+### Bug Fixes
+
+* remove PublishSingleFile — unsupported for WinUI 3 unpackaged apps ([79cce52](https://github.com/Nagell/deduplicate/commit/79cce52ac6aadbfb9391d3fa6bbf2feb6a2e802b))
+
 ## [0.1.3](https://github.com/Nagell/deduplicate/compare/v0.1.2...v0.1.3) (2026-04-01)
 
 
