@@ -167,10 +167,11 @@ public class MainViewModel : ObservableObject
             ? null
             : new Progress<ScanProgress>(p => CurrentProgress = p);
 
+        var skipped = new List<string>();
         try
         {
             var groups = await Task.Run(
-                () => _scanService.Scan(folder, method, recursive, token, progress),
+                () => _scanService.Scan(folder, method, recursive, token, progress, skipped),
                 token);
 
             foreach (var g in groups)
@@ -182,8 +183,8 @@ public class MainViewModel : ObservableObject
 
             _hasBeenScanned = true;
 
-            // Check if folder was empty (no files found at all) vs no duplicates
-            // We can't tell easily here without scanning file count, so just use HasResults
+            if (skipped.Count > 0)
+                ErrorMessage = $"⚠ {skipped.Count} file{(skipped.Count == 1 ? "" : "s")} skipped due to access errors";
         }
         catch (OperationCanceledException) { _hasBeenScanned = true; }
         catch (DirectoryNotFoundException)

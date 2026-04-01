@@ -10,7 +10,8 @@ public class DuplicateScanService
         DetectionMethod method,
         bool recursive,
         CancellationToken ct,
-        IProgress<ScanProgress>? progress = null)
+        IProgress<ScanProgress>? progress = null,
+        List<string>? skippedFiles = null)
     {
         var enumOptions = new EnumerationOptions
         {
@@ -26,7 +27,7 @@ public class DuplicateScanService
                     var info = new FileInfo(path);
                     return (info, ok: true);
                 }
-                catch { return (info: null!, ok: false); }
+                catch { skippedFiles?.Add(path); return (info: null!, ok: false); }
             })
             .Where(x => x.ok)
             .Select(x => x.info)
@@ -37,8 +38,8 @@ public class DuplicateScanService
         return method switch
         {
             DetectionMethod.QuickNameSize => ScanByNameAndSize(files, ct),
-            DetectionMethod.SmartSizeHash => ScanBySmartHash(files, ct, progress),
-            DetectionMethod.FullMd5       => ScanByFullHash(files, ct, progress),
+            DetectionMethod.SmartSizeHash => ScanBySmartHash(files, ct, progress, skippedFiles),
+            DetectionMethod.FullMd5       => ScanByFullHash(files, ct, progress, skippedFiles),
             _                             => ScanByNameAndSize(files, ct)
         };
     }
@@ -62,7 +63,7 @@ public class DuplicateScanService
     }
 
     private static IReadOnlyList<DuplicateGroup> ScanBySmartHash(
-        List<FileInfo> files, CancellationToken ct, IProgress<ScanProgress>? progress)
+        List<FileInfo> files, CancellationToken ct, IProgress<ScanProgress>? progress, List<string>? skippedFiles = null)
     {
         // Pre-filter: only files that share a size with at least one other
         var candidates = files
@@ -71,15 +72,15 @@ public class DuplicateScanService
             .SelectMany(g => g)
             .ToList();
 
-        return HashFiles(candidates, ct, progress);
+        return HashFiles(candidates, ct, progress, skippedFiles);
     }
 
     private static IReadOnlyList<DuplicateGroup> ScanByFullHash(
-        List<FileInfo> files, CancellationToken ct, IProgress<ScanProgress>? progress)
-        => HashFiles(files, ct, progress);
+        List<FileInfo> files, CancellationToken ct, IProgress<ScanProgress>? progress, List<string>? skippedFiles = null)
+        => HashFiles(files, ct, progress, skippedFiles);
 
     private static IReadOnlyList<DuplicateGroup> HashFiles(
-        List<FileInfo> filesToHash, CancellationToken ct, IProgress<ScanProgress>? progress)
+        List<FileInfo> filesToHash, CancellationToken ct, IProgress<ScanProgress>? progress, List<string>? skippedFiles = null)
     {
         long totalBytes = filesToHash.Sum(f => f.Length);
         long bytesHashed = 0;
@@ -97,10 +98,11 @@ public class DuplicateScanService
                 string hash;
                 try
                 {
-                    hash = ComputeMd5(file.FullName);
+                    hash = ComputeHash(file.FullName);
                 }
                 catch
                 {
+                    skippedFiles?.Add(file.FullName);
                     bytesHashed += file.Length;
                     filesScanned++;
                     continue;
@@ -139,11 +141,11 @@ public class DuplicateScanService
             .ToList();
     }
 
-    private static string ComputeMd5(string filePath)
+    private static string ComputeHash(string filePath)
     {
-        using var md5 = MD5.Create();
+        using var sha256 = SHA256.Create();
         using var stream = File.OpenRead(filePath);
-        var hash = md5.ComputeHash(stream);
+        var hash = sha256.ComputeHash(stream);
         return Convert.ToHexString(hash);
     }
 
