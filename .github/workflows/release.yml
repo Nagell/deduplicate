@@ -19,8 +19,6 @@ jobs:
   release-please:
     name: Release Please
     runs-on: ubuntu-latest
-    # Skip when bot pushes to prevent double workflow runs
-    if: github.actor != 'github-actions[bot]'
     outputs:
       release_created: ${{ steps.release.outputs.release_created }}
       tag_name: ${{ steps.release.outputs.tag_name }}
