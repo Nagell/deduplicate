@@ -68,7 +68,7 @@ jobs:
         run: |
           $tag = "${{ needs.release-please.outputs.tag_name }}"
           $current = (gh release view $tag --json body -q ".body")
-          $footer = "`n---`n`n## Installation`n`n1. **Before extracting:** right-click the zip → Properties → check **Unblock** → OK. This prevents Windows from silently blocking DLLs loaded by the app.`n2. Extract the zip and run ``Deduplicate.exe```n`n> **Windows App SDK runtime required** — download from [Microsoft](https://learn.microsoft.com/en-us/windows/apps/windows-app-sdk/downloads) if the app fails to start.`n> .NET 9 is bundled; no separate install needed.`n`n> **SmartScreen warning:** click *More info* → *Run anyway*. The app is unsigned — this warning appears for all unsigned executables."
+          $footer = "`n---`n`n## Installation`n`n1. **Before extracting:** right-click the zip → Properties → check **Unblock** → OK. This prevents Windows from silently blocking DLLs loaded by the app.`n2. Extract the zip and run ``Deduplicate.exe```n`n> .NET 9 and Windows App SDK are bundled — no separate installs needed.`n`n> **SmartScreen warning:** click *More info* → *Run anyway*. The app is unsigned — this warning appears for all unsigned executables."
           ($current + $footer) | Out-File -FilePath notes.md -Encoding utf8
           gh release edit $tag --notes-file notes.md
 
