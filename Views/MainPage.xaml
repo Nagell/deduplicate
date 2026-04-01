@@ -47,8 +47,8 @@
                     x:Name="MethodRadioButtons"
                     SelectedIndex="{x:Bind ViewModel.SelectedMethodIndex, Mode=TwoWay}">
                     <RadioButton Content="Quick – name + size (Recommended)"/>
-                    <RadioButton Content="Smart – size then MD5 hash"/>
-                    <RadioButton Content="Full Hash – MD5 all files"/>
+                    <RadioButton Content="Smart – size then SHA-256 hash"/>
+                    <RadioButton Content="Full Hash – SHA-256 all files"/>
                 </RadioButtons>
             </StackPanel>
 

@@ -15,7 +15,6 @@ public class MainViewModel : ObservableObject
     private bool _isRecursive = true;
     private bool _isScanning;
     private bool _hasBeenScanned;
-    private bool _hasEmptyFolder;
     private ScanProgress? _currentProgress;
     private int _selectedFileCount;
     private long _selectedBytes;
@@ -109,7 +108,7 @@ public class MainViewModel : ObservableObject
 
     public bool ShowInitialState => !_hasBeenScanned && !IsScanning;
 
-    public bool ShowNoDuplicates => _hasBeenScanned && !IsScanning && !HasResults && !_hasEmptyFolder;
+    public bool ShowNoDuplicates => _hasBeenScanned && !IsScanning && !HasResults;
 
     public bool HasSelection => _selectedFileCount > 0;
 
@@ -137,7 +136,7 @@ public class MainViewModel : ObservableObject
     {
         0 => DetectionMethod.QuickNameSize,
         1 => DetectionMethod.SmartSizeHash,
-        _ => DetectionMethod.FullMd5
+        _ => DetectionMethod.FullHash
     };
 
     public async Task StartScanAsync()
@@ -145,12 +144,11 @@ public class MainViewModel : ObservableObject
         if (!CanScan) return;
 
         _cts?.Cancel();
-        _cts?.Dispose();
-        _cts = new CancellationTokenSource();
+        var cts = new CancellationTokenSource();
+        _cts = cts;
 
         IsScanning = true;
         _hasBeenScanned = false;
-        _hasEmptyFolder = false;
         ErrorMessage = null;
         CurrentProgress = null;
         UnsubscribeAllItems();
@@ -162,7 +160,7 @@ public class MainViewModel : ObservableObject
         var method = SelectedMethod;
         var folder = FolderPath;
         var recursive = IsRecursive;
-        var token = _cts.Token;
+        var token = cts.Token;
         var progress = IsProgressIndeterminate
             ? null
             : new Progress<ScanProgress>(p => CurrentProgress = p);
@@ -197,8 +195,8 @@ public class MainViewModel : ObservableObject
         }
         finally
         {
-            _cts?.Dispose();
-            _cts = null;
+            cts.Dispose();
+            if (ReferenceEquals(_cts, cts)) _cts = null;
             IsScanning = false;
             OnPropertyChanged(nameof(HasResults));
             OnPropertyChanged(nameof(ShowInitialState));
@@ -253,7 +251,7 @@ public class MainViewModel : ObservableObject
         foreach (var group in DuplicateGroups.ToList())
         {
             foreach (var file in group.Items.Where(f => deleted.Contains(f)).ToList())
-                group.Items.Remove(file);
+                group.RemoveItem(file);
 
             if (group.Items.Count < 2)
             {

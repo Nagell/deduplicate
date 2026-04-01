@@ -17,21 +17,35 @@ public sealed partial class MainPage : Page
 
     private async void BrowseButton_Click(object sender, RoutedEventArgs e)
     {
-        var picker = new Windows.Storage.Pickers.FolderPicker();
-        picker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.Desktop;
-        picker.FileTypeFilter.Add("*");
+        try
+        {
+            var picker = new Windows.Storage.Pickers.FolderPicker();
+            picker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.Desktop;
+            picker.FileTypeFilter.Add("*");
 
-        var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindow);
-        WinRT.Interop.InitializeWithWindow.Initialize(picker, hwnd);
+            var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindow);
+            WinRT.Interop.InitializeWithWindow.Initialize(picker, hwnd);
 
-        var folder = await picker.PickSingleFolderAsync();
-        if (folder != null)
-            ViewModel.FolderPath = folder.Path;
+            var folder = await picker.PickSingleFolderAsync();
+            if (folder != null)
+                ViewModel.FolderPath = folder.Path;
+        }
+        catch (Exception ex)
+        {
+            await ShowErrorDialog("Could not open folder picker", ex.Message);
+        }
     }
 
     private async void ScanButton_Click(object sender, RoutedEventArgs e)
     {
-        await ViewModel.StartScanAsync();
+        try
+        {
+            await ViewModel.StartScanAsync();
+        }
+        catch (Exception ex)
+        {
+            await ShowErrorDialog("Scan error", ex.Message);
+        }
     }
 
     private void CancelButton_Click(object sender, RoutedEventArgs e)
@@ -39,27 +53,39 @@ public sealed partial class MainPage : Page
         ViewModel.CancelScan();
     }
 
-    private void OpenFile_Click(object sender, RoutedEventArgs e)
+    private async void OpenFile_Click(object sender, RoutedEventArgs e)
     {
-        if (sender is Button btn && btn.Tag is string path)
+        if (sender is not Button btn || btn.Tag is not string path) return;
+        try
         {
-            try
+            if (!File.Exists(path))
             {
-                Process.Start(new ProcessStartInfo(path) { UseShellExecute = true });
+                await ShowErrorDialog("File not found", $"The file no longer exists:\n{path}");
+                return;
             }
-            catch { /* file may have been moved */ }
+            Process.Start(new ProcessStartInfo(path) { UseShellExecute = true });
+        }
+        catch (Exception ex)
+        {
+            await ShowErrorDialog("Could not open file", ex.Message);
         }
     }
 
-    private void OpenFolder_Click(object sender, RoutedEventArgs e)
+    private async void OpenFolder_Click(object sender, RoutedEventArgs e)
     {
-        if (sender is Button btn && btn.Tag is string path)
+        if (sender is not Button btn || btn.Tag is not string path) return;
+        try
         {
-            try
+            Process.Start(new ProcessStartInfo
             {
-                Process.Start("explorer.exe", $"/select,\"{path}\"");
-            }
-            catch { /* ignore */ }
+                FileName = "explorer.exe",
+                Arguments = $"/select,\"{path}\"",
+                UseShellExecute = true
+            });
+        }
+        catch (Exception ex)
+        {
+            await ShowErrorDialog("Could not open folder", ex.Message);
         }
     }
 
@@ -116,14 +142,19 @@ public sealed partial class MainPage : Page
         }
         catch (Exception ex)
         {
-            var errorDialog = new ContentDialog
-            {
-                Title = "Error",
-                Content = ex.Message,
-                CloseButtonText = "OK",
-                XamlRoot = XamlRoot
-            };
-            await errorDialog.ShowAsync();
+            await ShowErrorDialog("Error", ex.Message);
         }
+    }
+
+    private async Task ShowErrorDialog(string title, string message)
+    {
+        var dialog = new ContentDialog
+        {
+            Title = title,
+            Content = message,
+            CloseButtonText = "OK",
+            XamlRoot = XamlRoot
+        };
+        await dialog.ShowAsync();
     }
 }

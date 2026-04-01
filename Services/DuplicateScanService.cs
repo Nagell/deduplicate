@@ -39,7 +39,7 @@ public class DuplicateScanService
         {
             DetectionMethod.QuickNameSize => ScanByNameAndSize(files, ct),
             DetectionMethod.SmartSizeHash => ScanBySmartHash(files, ct, progress, skippedFiles),
-            DetectionMethod.FullMd5       => ScanByFullHash(files, ct, progress, skippedFiles),
+            DetectionMethod.FullHash      => ScanByFullHash(files, ct, progress, skippedFiles),
             _                             => ScanByNameAndSize(files, ct)
         };
     }
@@ -56,7 +56,7 @@ public class DuplicateScanService
             {
                 var group = new DuplicateGroup { GroupKey = $"{g.Key.Item1}|{g.Key.Item2}" };
                 foreach (var fi in g.OrderBy(f => f.FullName))
-                    group.Items.Add(ToFileItem(fi));
+                    group.AddItem(ToFileItem(fi));
                 return group;
             })
             .ToList();
@@ -135,7 +135,7 @@ public class DuplicateScanService
             {
                 var group = new DuplicateGroup { GroupKey = kv.Key };
                 foreach (var fi in kv.Value.OrderBy(f => f.FullName))
-                    group.Items.Add(ToFileItem(fi));
+                    group.AddItem(ToFileItem(fi));
                 return group;
             })
             .ToList();

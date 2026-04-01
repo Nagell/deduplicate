@@ -53,8 +53,8 @@ A native Windows 11 duplicate file finder built with WinUI 3. Scan a folder with
 **Detection methods:**
 
 - **Quick** *(recommended)* — groups by filename + file size, instant results
-- **Smart** — pre-filters by size, then confirms with MD5 hash
-- **Full MD5** — hashes every file regardless of size
+- **Smart** — pre-filters by size, then confirms with SHA-256 hash
+- **Full Hash** — SHA-256 hashes every file regardless of size
 
 Hash-based scans show live progress (MB/s + ETA) and can be cancelled at any time, returning the partial results found so far.
 
@@ -112,8 +112,8 @@ Hash-based scans show live progress (MB/s + ETA) and can be cancelled at any tim
 
 - [x] WinUI 3 unpackaged app (no installer for end users)
 - [x] Quick scan — name + size matching
-- [x] Smart scan — size pre-filter + MD5 confirmation
-- [x] Full MD5 scan
+- [x] Smart scan — size pre-filter + SHA-256 confirmation
+- [x] Full SHA-256 scan
 - [x] Recursive scanning with toggle
 - [x] Cancellable hash scans with live progress (MB/s + ETA)
 - [x] Partial results returned on cancel

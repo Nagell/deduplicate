@@ -4,5 +4,5 @@ public enum DetectionMethod
 {
     QuickNameSize,
     SmartSizeHash,
-    FullMd5
+    FullHash
 }
