@@ -230,23 +230,36 @@ public class MainViewModel : ObservableObject
     public bool HasAllCopiesInAnyGroup()
         => DuplicateGroups.Any(g => g.Items.Count > 0 && g.Items.All(f => f.IsSelected));
 
-    public void DeleteFiles(List<FileItem> files)
+    public IReadOnlyList<string> DeleteFiles(List<FileItem> files)
     {
+        var failed = new List<string>();
+        var deleted = new HashSet<FileItem>(ReferenceEqualityComparer.Instance);
+
         foreach (var file in files)
         {
-            file.PropertyChanged -= OnFileItemPropertyChanged;
-            try { File.Delete(file.Path); }
-            catch { /* skip files that can't be deleted */ }
+            try
+            {
+                File.Delete(file.Path);
+                file.PropertyChanged -= OnFileItemPropertyChanged;
+                deleted.Add(file);
+            }
+            catch
+            {
+                failed.Add(file.Path);
+            }
         }
 
-        var fileSet = files.ToHashSet();
         foreach (var group in DuplicateGroups.ToList())
         {
-            foreach (var file in group.Items.Where(f => fileSet.Contains(f)).ToList())
+            foreach (var file in group.Items.Where(f => deleted.Contains(f)).ToList())
                 group.Items.Remove(file);
 
             if (group.Items.Count < 2)
+            {
+                foreach (var item in group.Items)
+                    item.PropertyChanged -= OnFileItemPropertyChanged;
                 DuplicateGroups.Remove(group);
+            }
         }
 
         _selectedFileCount = 0;
@@ -256,6 +269,8 @@ public class MainViewModel : ObservableObject
         OnPropertyChanged(nameof(HasResults));
         OnPropertyChanged(nameof(ShowNoDuplicates));
         OnPropertyChanged(nameof(StatusText));
+
+        return failed;
     }
 
     private void RefreshSelectionProperties()

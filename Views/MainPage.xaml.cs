@@ -65,29 +65,65 @@ public sealed partial class MainPage : Page
 
     private async void DeleteSelected_Click(object sender, RoutedEventArgs e)
     {
-        var selected = ViewModel.GetSelectedFiles();
-        if (selected.Count == 0) return;
-
-        var allCopiesWarning = ViewModel.HasAllCopiesInAnyGroup();
-
-        var totalSize = Helpers.FileSizeFormatter.FormatBytes(selected.Sum(f => f.SizeBytes));
-        var bodyText = $"Permanently delete {selected.Count} file{(selected.Count == 1 ? "" : "s")} ({totalSize})?\n\nThis cannot be undone. Files will NOT be sent to the Recycle Bin.";
-
-        if (allCopiesWarning)
-            bodyText += "\n\n⚠ Warning: You have selected ALL copies of one or more duplicate groups. Those files will be permanently lost.";
-
-        var dialog = new ContentDialog
+        try
         {
-            Title = "Confirm Permanent Deletion",
-            Content = bodyText,
-            PrimaryButtonText = "Delete",
-            CloseButtonText = "Cancel",
-            DefaultButton = ContentDialogButton.Close,
-            XamlRoot = XamlRoot
-        };
+            var selected = ViewModel.GetSelectedFiles();
+            if (selected.Count == 0) return;
 
-        var result = await dialog.ShowAsync();
-        if (result == ContentDialogResult.Primary)
-            ViewModel.DeleteFiles(selected);
+            var allCopiesWarning = ViewModel.HasAllCopiesInAnyGroup();
+
+            var totalSize = Helpers.FileSizeFormatter.FormatBytes(selected.Sum(f => f.SizeBytes));
+            var bodyText = $"Permanently delete {selected.Count} file{(selected.Count == 1 ? "" : "s")} ({totalSize})?\n\nThis cannot be undone. Files will NOT be sent to the Recycle Bin.";
+
+            if (allCopiesWarning)
+                bodyText += "\n\n⚠ Warning: You have selected ALL copies of one or more duplicate groups. Those files will be permanently lost.";
+
+            var dialog = new ContentDialog
+            {
+                Title = "Confirm Permanent Deletion",
+                Content = bodyText,
+                PrimaryButtonText = "Delete",
+                CloseButtonText = "Cancel",
+                DefaultButton = ContentDialogButton.Close,
+                XamlRoot = XamlRoot
+            };
+
+            var result = await dialog.ShowAsync();
+            if (result != ContentDialogResult.Primary) return;
+
+            var failed = ViewModel.DeleteFiles(selected);
+            if (failed.Count == 0) return;
+
+            const int maxShow = 15;
+            var lines = failed.Take(maxShow).Select(p => $"• {p}");
+            var failBodyText = string.Join("\n", lines);
+            if (failed.Count > maxShow)
+                failBodyText += $"\n...and {failed.Count - maxShow} more";
+
+            var failDialog = new ContentDialog
+            {
+                Title = $"{failed.Count} file{(failed.Count == 1 ? "" : "s")} could not be deleted",
+                Content = new TextBlock
+                {
+                    Text = failBodyText,
+                    FontSize = 12,
+                    TextWrapping = Microsoft.UI.Xaml.TextWrapping.Wrap
+                },
+                CloseButtonText = "OK",
+                XamlRoot = XamlRoot
+            };
+            await failDialog.ShowAsync();
+        }
+        catch (Exception ex)
+        {
+            var errorDialog = new ContentDialog
+            {
+                Title = "Error",
+                Content = ex.Message,
+                CloseButtonText = "OK",
+                XamlRoot = XamlRoot
+            };
+            await errorDialog.ShowAsync();
+        }
     }
 }
