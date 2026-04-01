@@ -54,7 +54,6 @@ jobs:
             -c Release `
             -r win-x64 `
             --self-contained true `
-            -p:PublishSingleFile=true `
             -p:Version=${{ needs.release-please.outputs.version }} `
             -o ./publish
 
