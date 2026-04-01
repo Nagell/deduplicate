@@ -1,12 +1,10 @@
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using Deduplicate.Helpers;
 
 namespace Deduplicate.Models;
 
-public class DuplicateGroup : INotifyPropertyChanged
+public class DuplicateGroup : ObservableObject
 {
     private readonly ObservableCollection<FileItem> _items = new();
 
@@ -35,8 +33,4 @@ public class DuplicateGroup : INotifyPropertyChanged
         OnPropertyChanged(nameof(WastedBytes));
         OnPropertyChanged(nameof(GroupLabel));
     }
-
-    public event PropertyChangedEventHandler? PropertyChanged;
-    private void OnPropertyChanged([CallerMemberName] string? name = null)
-        => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 }

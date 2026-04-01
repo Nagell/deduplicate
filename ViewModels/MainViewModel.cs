@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using Deduplicate;
 using Deduplicate.Helpers;
 using Deduplicate.Models;
 using Deduplicate.Services;
@@ -229,24 +230,29 @@ public class MainViewModel : ObservableObject
     public bool HasAllCopiesInAnyGroup()
         => DuplicateGroups.Any(g => g.Items.Count > 0 && g.Items.All(f => f.IsSelected));
 
-    public IReadOnlyList<string> DeleteFiles(List<FileItem> files)
+    public async Task<IReadOnlyList<string>> DeleteFiles(List<FileItem> files)
     {
         var failed = new List<string>();
         var deleted = new HashSet<FileItem>(ReferenceEqualityComparer.Instance);
 
-        foreach (var file in files)
+        await Task.Run(() =>
         {
-            try
+            foreach (var file in files)
             {
-                File.Delete(file.Path);
-                file.PropertyChanged -= OnFileItemPropertyChanged;
-                deleted.Add(file);
+                try
+                {
+                    File.Delete(file.Path);
+                    deleted.Add(file);
+                }
+                catch
+                {
+                    failed.Add(file.Path);
+                }
             }
-            catch
-            {
-                failed.Add(file.Path);
-            }
-        }
+        });
+
+        foreach (var file in files.Where(f => deleted.Contains(f)))
+            file.PropertyChanged -= OnFileItemPropertyChanged;
 
         foreach (var group in DuplicateGroups.ToList())
         {

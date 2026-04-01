@@ -152,8 +152,6 @@ public class DuplicateScanService
     private static FileItem ToFileItem(FileInfo fi) => new()
     {
         Path = fi.FullName,
-        Name = fi.Name,
-        Directory = fi.DirectoryName ?? string.Empty,
         SizeBytes = fi.Length,
         LastModified = fi.LastWriteTime
     };

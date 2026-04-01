@@ -117,7 +117,7 @@ public sealed partial class MainPage : Page
             var result = await dialog.ShowAsync();
             if (result != ContentDialogResult.Primary) return;
 
-            var failed = ViewModel.DeleteFiles(selected);
+            var failed = await ViewModel.DeleteFiles(selected);
             if (failed.Count == 0) return;
 
             const int maxShow = 15;

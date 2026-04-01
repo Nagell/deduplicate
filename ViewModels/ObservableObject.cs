@@ -1,7 +1,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace Deduplicate.ViewModels;
+namespace Deduplicate;
 
 public class ObservableObject : INotifyPropertyChanged
 {
