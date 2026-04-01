@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.2](https://github.com/Nagell/deduplicate/compare/v0.1.1...v0.1.2) (2026-04-01)
+
+
+### Bug Fixes
+
+* abort deletion if scan restarts while confirmation dialog is open ([89d4d9d](https://github.com/Nagell/deduplicate/commit/89d4d9d7002cd6314e3e495a31b43f7a0ce0a580))
+
 ## [0.1.1](https://github.com/Nagell/deduplicate/compare/v0.1.0...v0.1.1) (2026-04-01)
 
 
