@@ -15,29 +15,29 @@
             ItemsPath="Items"/>
     </Page.Resources>
 
-    <Grid RowDefinitions="Auto,Auto,Auto,*,Auto">
+    <Grid ColumnDefinitions="300,*">
 
-        <!-- Row 0: Folder Picker -->
-        <Grid Grid.Row="0" Margin="20,16,20,0" ColumnDefinitions="*,Auto">
-            <TextBox
-                Grid.Column="0"
-                PlaceholderText="Select a folder to scan..."
-                Text="{x:Bind ViewModel.FolderPath, Mode=TwoWay}"
-                CornerRadius="4,0,0,4"
-                VerticalAlignment="Stretch"/>
-            <Button
-                Grid.Column="1"
-                Content="Browse"
-                Click="BrowseButton_Click"
-                Style="{StaticResource AccentButtonStyle}"
-                CornerRadius="0,4,4,0"
-                Padding="20,8"/>
-        </Grid>
+        <!-- ══ Left panel ══ -->
+        <Grid Grid.Column="0" RowDefinitions="Auto,Auto,Auto,Auto,*,Auto" Padding="12,12,12,12">
 
-        <!-- Row 1: Options -->
-        <Grid Grid.Row="1" Margin="20,16,20,0" ColumnDefinitions="Auto,40,Auto">
+            <!-- Folder picker -->
+            <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Margin="0,0,0,16">
+                <TextBox
+                    Grid.Column="0"
+                    PlaceholderText="Select a folder to scan..."
+                    Text="{x:Bind ViewModel.FolderPath, Mode=TwoWay}"
+                    CornerRadius="4,0,0,4"/>
+                <Button
+                    Grid.Column="1"
+                    Content="Browse"
+                    Click="BrowseButton_Click"
+                    Style="{StaticResource AccentButtonStyle}"
+                    CornerRadius="0,4,4,0"
+                    Padding="14,8"/>
+            </Grid>
 
-            <StackPanel Grid.Column="0">
+            <!-- Detection Method -->
+            <StackPanel Grid.Row="1" Margin="0,0,0,16">
                 <TextBlock
                     Text="Detection Method"
                     Style="{StaticResource CaptionTextBlockStyle}"
@@ -46,65 +46,83 @@
                 <RadioButtons
                     x:Name="MethodRadioButtons"
                     SelectedIndex="{x:Bind ViewModel.SelectedMethodIndex, Mode=TwoWay}">
-                    <RadioButton Content="Quick – name + size  (Recommended)"/>
-                    <RadioButton Content="Smart – size then MD5 hash  (more accurate)"/>
-                    <RadioButton Content="Full Hash – MD5 all files  (most thorough)"/>
+                    <RadioButton Content="Quick – name + size (Recommended)"/>
+                    <RadioButton Content="Smart – size then MD5 hash"/>
+                    <RadioButton Content="Full Hash – MD5 all files"/>
                 </RadioButtons>
             </StackPanel>
 
-            <StackPanel
-                Grid.Column="2"
-                VerticalAlignment="Top"
-                Margin="0,2,0,0">
-                <TextBlock
-                    Text="Include subfolders"
-                    Style="{StaticResource CaptionTextBlockStyle}"
-                    Foreground="{ThemeResource TextFillColorTertiaryBrush}"
-                    Margin="0,0,0,6"/>
-                <ToggleSwitch
-                    IsOn="{x:Bind ViewModel.IsRecursive, Mode=TwoWay}"
-                    OnContent="On"
-                    OffContent="Off"
-                    Margin="0"/>
+            <!-- Include subfolders -->
+            <ToggleSwitch
+                Grid.Row="2"
+                IsOn="{x:Bind ViewModel.IsRecursive, Mode=TwoWay}"
+                OnContent="Include subfolders"
+                OffContent="Include subfolders"
+                Margin="0,0,0,16"/>
+
+            <!-- Scan / Cancel + progress -->
+            <StackPanel Grid.Row="3" Spacing="8">
+                <Button
+                    Content="Scan for Duplicates"
+                    Click="ScanButton_Click"
+                    Style="{StaticResource AccentButtonStyle}"
+                    IsEnabled="{x:Bind ViewModel.CanScan, Mode=OneWay}"
+                    HorizontalAlignment="Stretch"
+                    Padding="0,10"/>
+                <StackPanel
+                    Visibility="{x:Bind ViewModel.IsScanning, Mode=OneWay, Converter={StaticResource BoolToVisConverter}}"
+                    Spacing="4">
+                    <ProgressBar
+                        Value="{x:Bind ViewModel.ProgressPercent, Mode=OneWay}"
+                        IsIndeterminate="{x:Bind ViewModel.IsProgressIndeterminate, Mode=OneWay}"
+                        Height="4"/>
+                    <TextBlock
+                        Text="{x:Bind ViewModel.ProgressText, Mode=OneWay}"
+                        Style="{StaticResource CaptionTextBlockStyle}"
+                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+                </StackPanel>
+                <Button
+                    Content="Cancel"
+                    Click="CancelButton_Click"
+                    Visibility="{x:Bind ViewModel.IsScanning, Mode=OneWay, Converter={StaticResource BoolToVisConverter}}"
+                    HorizontalAlignment="Stretch"
+                    Padding="0,10"/>
             </StackPanel>
-        </Grid>
 
-        <!-- Row 2: Scan Controls + Progress -->
-        <Grid Grid.Row="2" Margin="20,16,20,0" ColumnDefinitions="Auto,*,Auto">
-            <Button
-                Grid.Column="0"
-                Content="Scan for Duplicates"
-                Click="ScanButton_Click"
-                Style="{StaticResource AccentButtonStyle}"
-                IsEnabled="{x:Bind ViewModel.CanScan, Mode=OneWay}"
-                Padding="20,10"/>
+            <!-- Row 4: spacer -->
 
+            <!-- Stats card + Delete button (only when results exist) -->
             <StackPanel
-                Grid.Column="1"
-                Margin="16,0"
-                VerticalAlignment="Center"
-                Visibility="{x:Bind ViewModel.IsScanning, Mode=OneWay, Converter={StaticResource BoolToVisConverter}}">
-                <ProgressBar
-                    Value="{x:Bind ViewModel.ProgressPercent, Mode=OneWay}"
-                    IsIndeterminate="{x:Bind ViewModel.IsProgressIndeterminate, Mode=OneWay}"
-                    Height="4"/>
+                Grid.Row="5"
+                Spacing="8"
+                Visibility="{x:Bind ViewModel.HasResults, Mode=OneWay, Converter={StaticResource BoolToVisConverter}}">
+
                 <TextBlock
-                    Text="{x:Bind ViewModel.ProgressText, Mode=OneWay}"
-                    Style="{StaticResource CaptionTextBlockStyle}"
+                    Text="{x:Bind ViewModel.StatusText, Mode=OneWay}"
+                    Style="{StaticResource BodyTextBlockStyle}"
                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                    Margin="0,4,0,0"/>
-            </StackPanel>
+                    TextWrapping="Wrap"
+                    Padding="2,0"/>
 
-            <Button
-                Grid.Column="2"
-                Content="Cancel"
-                Click="CancelButton_Click"
-                Visibility="{x:Bind ViewModel.IsScanning, Mode=OneWay, Converter={StaticResource BoolToVisConverter}}"
-                Padding="16,10"/>
+                <Button
+                    Content="Delete Selected"
+                    IsEnabled="{x:Bind ViewModel.HasSelection, Mode=OneWay}"
+                    Click="DeleteSelected_Click"
+                    Style="{StaticResource AccentButtonStyle}"
+                    HorizontalAlignment="Stretch"
+                    Padding="0,10"/>
+            </StackPanel>
         </Grid>
 
-        <!-- Row 3: Results Area -->
-        <Grid Grid.Row="3" Margin="20,16,20,0">
+        <!-- ══ Right panel: results ══ -->
+        <Border
+            Grid.Column="1"
+            Margin="0,12,12,12"
+            Background="{ThemeResource LayerFillColorDefaultBrush}"
+            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+            BorderThickness="1"
+            CornerRadius="8">
+        <Grid>
 
             <!-- Initial state -->
             <StackPanel
@@ -144,11 +162,12 @@
                     Opacity="0.5"/>
             </StackPanel>
 
-            <!-- Results -->
+            <!-- Results list -->
             <ListView
                 x:Name="ResultsListView"
                 ItemsSource="{x:Bind GroupedResultsCVS.View, Mode=OneWay}"
                 SelectionMode="None"
+                Padding="0,4,0,4"
                 Visibility="{x:Bind ViewModel.HasResults, Mode=OneWay, Converter={StaticResource BoolToVisConverter}}">
 
                 <ListView.GroupStyle>
@@ -161,7 +180,7 @@
                                     BorderThickness="1"
                                     CornerRadius="4"
                                     Padding="12,8"
-                                    Margin="0,8,0,2">
+                                    Margin="0,2,0,2">
                                     <StackPanel Orientation="Horizontal" Spacing="8">
                                         <FontIcon
                                             FontFamily="Segoe MDL2 Assets"
@@ -272,37 +291,6 @@
                 </ListView.ItemContainerStyle>
             </ListView>
         </Grid>
-
-        <!-- Row 4: Footer -->
-        <Border
-            Grid.Row="4"
-            Padding="20,12,20,12"
-            Background="{ThemeResource LayerFillColorDefaultBrush}"
-            BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}"
-            BorderThickness="0,1,0,0"
-            Visibility="{x:Bind ViewModel.HasResults, Mode=OneWay, Converter={StaticResource BoolToVisConverter}}">
-            <Grid ColumnDefinitions="*,Auto">
-                <TextBlock
-                    Grid.Column="0"
-                    Text="{x:Bind ViewModel.StatusText, Mode=OneWay}"
-                    VerticalAlignment="Center"
-                    Style="{StaticResource BodyTextBlockStyle}"/>
-                <Button
-                    Grid.Column="1"
-                    Content="Delete Selected"
-                    IsEnabled="{x:Bind ViewModel.HasSelection, Mode=OneWay}"
-                    Click="DeleteSelected_Click"
-                    Background="#C42B1C"
-                    Foreground="White"
-                    Padding="20,10">
-                    <Button.Resources>
-                        <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="#D13425"/>
-                        <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="#A3231A"/>
-                        <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="White"/>
-                        <SolidColorBrush x:Key="ButtonForegroundPressed" Color="White"/>
-                    </Button.Resources>
-                </Button>
-            </Grid>
         </Border>
 
     </Grid>
