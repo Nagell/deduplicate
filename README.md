@@ -74,8 +74,15 @@ Hash-based scans show live progress (MB/s + ETA) and can be cancelled at any tim
 
 ### Prerequisites
 
+**Building from source:**
+
 - [.NET 9 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/9.0)
 - Windows 10 version 1809 or later (Windows 11 recommended for Mica backdrop)
+
+**Running a release build:**
+
+- Windows 10 version 1809 or later
+- [Windows App SDK runtime](https://learn.microsoft.com/en-us/windows/apps/windows-app-sdk/downloads) — required for WinUI 3; .NET 9 is bundled in the zip and does not need a separate install
 
 ### Installation
 

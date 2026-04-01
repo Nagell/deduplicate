@@ -55,6 +55,16 @@ jobs:
           Compress-Archive -Path ./publish/* `
             -DestinationPath ./Deduplicate-v${{ needs.release-please.outputs.version }}-win-x64.zip
 
+      - name: Append prerequisites to release notes
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $tag = "${{ needs.release-please.outputs.tag_name }}"
+          $current = (gh release view $tag --json body -q ".body")
+          $footer = "`n---`n`n## Prerequisites`n`n> **Windows App SDK runtime required** — download and install from [Microsoft](https://learn.microsoft.com/en-us/windows/apps/windows-app-sdk/downloads) before running.`n> .NET 9 is bundled in the zip; no separate install needed."
+          ($current + $footer) | Out-File -FilePath notes.md -Encoding utf8
+          gh release edit $tag --notes-file notes.md
+
       - name: Upload to release
         uses: softprops/action-gh-release@v2
         with:
