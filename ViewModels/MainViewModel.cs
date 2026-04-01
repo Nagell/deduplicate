@@ -20,8 +20,11 @@ public class MainViewModel : ObservableObject
     private int _selectedFileCount;
     private long _selectedBytes;
     private string? _errorMessage;
+    private int _scanGeneration;
 
     public ObservableCollection<DuplicateGroup> DuplicateGroups { get; } = new();
+
+    public int ScanGeneration => _scanGeneration;
 
     public string FolderPath
     {
@@ -154,6 +157,7 @@ public class MainViewModel : ObservableObject
         CurrentProgress = null;
         UnsubscribeAllItems();
         DuplicateGroups.Clear();
+        _scanGeneration++;
         _selectedFileCount = 0;
         _selectedBytes = 0;
         RefreshSelectionProperties();

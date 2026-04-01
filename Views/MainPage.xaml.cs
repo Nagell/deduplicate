@@ -114,8 +114,10 @@ public sealed partial class MainPage : Page
                 XamlRoot = XamlRoot
             };
 
+            var scanGeneration = ViewModel.ScanGeneration;
             var result = await dialog.ShowAsync();
             if (result != ContentDialogResult.Primary) return;
+            if (ViewModel.ScanGeneration != scanGeneration) return;
 
             var failed = await ViewModel.DeleteFiles(selected);
             if (failed.Count == 0) return;
