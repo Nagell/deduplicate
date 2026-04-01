@@ -1,12 +1,18 @@
-[![CC BY-NC 4.0 License](https://img.shields.io/badge/License-CC%20BY--NC%204.0-lightgrey.svg?style=for-the-badge)](LICENSE)
-[![.NET 9](https://img.shields.io/badge/.NET-9-512BD4?style=for-the-badge&logo=dotnet&logoColor=white)](https://dotnet.microsoft.com/)
-[![Windows App SDK](https://img.shields.io/badge/Windows%20App%20SDK-1.6-0078D4?style=for-the-badge&logo=windows&logoColor=white)](https://learn.microsoft.com/en-us/windows/apps/windows-app-sdk/)
-[![LinkedIn](https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555)](https://www.linkedin.com/in/dawidnitka)
+<a id="readme-top"></a>
+
+<!-- PROJECT SHIELDS -->
+[![CC BY-NC 4.0][license-shield]][license-url]
+[![.NET 9][net-shield]][net-url]
+[![Windows App SDK][winSDK-shield]][winSDK-url]
+[![LinkedIn][linkedin-shield]][linkedin-url]
 
 <div align="center">
   <h3 align="center">deduplicate</h3>
   <p align="center">
     A fast, native Windows 11 duplicate file finder — no installation required
+    <br />
+    <a href="./docs/DEVELOPMENT.md"><strong>Explore the docs »</strong></a>
+    <br />
     <br />
     <a href="https://github.com/Nagell/deduplicate/issues/new?labels=bug">Report Bug</a>
     ·
@@ -14,6 +20,7 @@
   </p>
 </div>
 
+<!-- TABLE OF CONTENTS -->
 <details>
   <summary>Table of Contents</summary>
   <ol>
@@ -30,14 +37,16 @@
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
-    <li><a href="#commands">Commands</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
   </ol>
 </details>
 
+<!-- ABOUT THE PROJECT -->
 ## About The Project
+
+[![Product Name Screen Shot][product-screenshot]](https://github.com/Nagell/deduplicate)
 
 A native Windows 11 duplicate file finder built with WinUI 3. Scan a folder with one of three detection methods, review grouped results, and bulk-delete duplicates — all without installing anything on the end user's machine.
 
@@ -53,13 +62,14 @@ Hash-based scans show live progress (MB/s + ETA) and can be cancelled at any tim
 
 ### Built With
 
-- [![WinUI 3](https://img.shields.io/badge/WinUI%203-0078D4?style=for-the-badge&logo=windows&logoColor=white)](https://learn.microsoft.com/en-us/windows/apps/winui/winui3/)
-- [![.NET 9](https://img.shields.io/badge/.NET-9-512BD4?style=for-the-badge&logo=dotnet&logoColor=white)](https://dotnet.microsoft.com/)
-- [![C#](https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=csharp&logoColor=white)](https://learn.microsoft.com/en-us/dotnet/csharp/)
-- [![Windows App SDK](https://img.shields.io/badge/Windows%20App%20SDK-1.6-0078D4?style=for-the-badge&logo=windows&logoColor=white)](https://learn.microsoft.com/en-us/windows/apps/windows-app-sdk/)
+- [![WinUI 3][WinUI-shield]][WinUI-url]
+- [![.NET 9][net-shield]][net-url]
+- [![C#][csharp-shield]][csharp-url]
+- [![Windows App SDK][winSDK-shield]][winSDK-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+<!-- GETTING STARTED -->
 ## Getting Started
 
 ### Prerequisites
@@ -70,21 +80,25 @@ Hash-based scans show live progress (MB/s + ETA) and can be cancelled at any tim
 ### Installation
 
 1. Clone the repository
+
    ```sh
    git clone https://github.com/Nagell/deduplicate.git
    ```
 
 2. Restore dependencies
+
    ```sh
    dotnet restore
    ```
 
 3. Build the project
+
    ```sh
    dotnet build
    ```
 
 4. Run the application
+
    ```sh
    dotnet run
    ```
@@ -93,25 +107,7 @@ Hash-based scans show live progress (MB/s + ETA) and can be cancelled at any tim
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## Commands
-
-| Command | Description |
-|---|---|
-| `dotnet build` | Compile the project |
-| `dotnet run` | Build and launch the app |
-| `dotnet watch run` | Launch with .NET Hot Reload (C# changes applied live) |
-| `dotnet clean` | Remove build artifacts |
-
-**VS Code shortcuts**
-
-| Shortcut | Action |
-|---|---|
-| `Ctrl+Shift+B` | Build |
-| `F5` | Debug (attach debugger, breakpoints) |
-| `Ctrl+Shift+P` → `Tasks: Run Task` | Run / Watch / Clean |
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
+<!-- ROADMAP -->
 ## Roadmap
 
 - [x] WinUI 3 unpackaged app (no installer for end users)
@@ -137,12 +133,14 @@ Hash-based scans show live progress (MB/s + ETA) and can be cancelled at any tim
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+<!-- LICENSE -->
 ## License
 
 Distributed under the CC BY-NC 4.0 License. See `LICENSE` for more information.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+<!-- CONTACT -->
 ## Contact
 
 Dawid Nitka — [LinkedIn](https://www.linkedin.com/in/dawidnitka)
@@ -150,3 +148,19 @@ Dawid Nitka — [LinkedIn](https://www.linkedin.com/in/dawidnitka)
 Project Link: [https://github.com/Nagell/deduplicate](https://github.com/Nagell/deduplicate)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- MARKDOWN LINKS & IMAGES -->
+[license-shield]: https://img.shields.io/badge/License-CC%20BY--NC%204.0-lightgrey.svg?style=for-the-badge
+[license-url]: ./LICENSE
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[linkedin-url]: https://www.linkedin.com/in/dawidnitka
+[product-screenshot]: /docs/screenshot.png
+
+[net-shield]: https://img.shields.io/badge/.NET-9-512BD4?style=for-the-badge&logo=dotnet&logoColor=white
+[net-url]: https://dotnet.microsoft.com/
+[winSDK-shield]: https://img.shields.io/badge/Windows%20App%20SDK-1.6-0078D4?style=for-the-badge&logo=windows&logoColor=white
+[winSDK-url]: https://learn.microsoft.com/en-us/windows/apps/windows-app-sdk/
+[WinUI-shield]: https://img.shields.io/badge/WinUI%203-0078D4?style=for-the-badge&logo=windows&logoColor=white
+[WinUI-url]: https://learn.microsoft.com/en-us/windows/apps/winui/winui3/
+[csharp-shield]: https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=csharp&logoColor=white
+[csharp-url]: https://learn.microsoft.com/en-us/dotnet/csharp/
