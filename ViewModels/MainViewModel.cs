@@ -241,6 +241,17 @@ public class MainViewModel : ObservableObject
             {
                 try
                 {
+                    var info = new FileInfo(file.Path);
+                    if (!info.Exists)
+                    {
+                        deleted.Add(file);
+                        continue;
+                    }
+                    if (info.Length != file.SizeBytes)
+                    {
+                        failed.Add(file.Path);
+                        continue;
+                    }
                     File.Delete(file.Path);
                     deleted.Add(file);
                 }
