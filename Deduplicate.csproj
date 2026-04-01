@@ -10,7 +10,6 @@
     <Version>0.1.0</Version>
     <UseWinUI>true</UseWinUI>
     <WindowsPackageType>None</WindowsPackageType>
-    <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
     <EnableMsixTooling>true</EnableMsixTooling>
     <AppxGeneratePriEnabled>false</AppxGeneratePriEnabled>
     <Nullable>enable</Nullable>

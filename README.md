@@ -82,7 +82,7 @@ Hash-based scans show live progress (MB/s + ETA) and can be cancelled at any tim
 **Running a release build:**
 
 - Windows 10 version 1809 or later
-- No additional runtime required — .NET 9 and Windows App SDK are bundled in the zip
+- [Windows App SDK runtime](https://learn.microsoft.com/en-us/windows/apps/windows-app-sdk/downloads) — required for WinUI 3; .NET 9 is bundled in the zip and does not need a separate install
 
 ### Installation
 
