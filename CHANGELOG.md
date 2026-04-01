@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.9](https://github.com/Nagell/deduplicate/compare/v0.1.8...v0.1.9) (2026-04-01)
+
+
+### Documentation
+
+* simplify release installation instructions ([2621b3c](https://github.com/Nagell/deduplicate/commit/2621b3c427fdc27f4493050cceecd1ba9969817c))
+
 ## [0.1.8](https://github.com/Nagell/deduplicate/compare/v0.1.7...v0.1.8) (2026-04-01)
 
 
