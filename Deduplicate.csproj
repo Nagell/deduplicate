@@ -27,4 +27,15 @@
   <ItemGroup Condition="'$(DesignTimeBuild)' == 'true'">
     <Compile Include="obj\**\*.g.i.cs" />
   </ItemGroup>
+
+  <!-- dotnet publish does not copy XBF (compiled XAML) files for WinUI 3 unpackaged apps.
+       Copy them from the build output to the publish directory explicitly. -->
+  <Target Name="CopyXbfToPublishDir" AfterTargets="Publish">
+    <ItemGroup>
+      <_XbfFiles Include="$(OutDir)**\*.xbf" />
+    </ItemGroup>
+    <Copy SourceFiles="@(_XbfFiles)"
+          DestinationFiles="@(_XbfFiles->'$(PublishDir)%(RecursiveDir)%(FileName)%(Extension)')"
+          SkipUnchangedFiles="true" />
+  </Target>
 </Project>
