@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.5](https://github.com/Nagell/deduplicate/compare/v0.1.4...v0.1.5) (2026-04-01)
+
+
+### Bug Fixes
+
+* remove EnableMsixTooling — not needed without PublishSingleFile ([a986797](https://github.com/Nagell/deduplicate/commit/a986797d314affafba6bf4c54cc0ed95603b5bff))
+
 ## [0.1.4](https://github.com/Nagell/deduplicate/compare/v0.1.3...v0.1.4) (2026-04-01)
 
 
