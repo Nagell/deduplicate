@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.1.8](https://github.com/Nagell/deduplicate/compare/v0.1.7...v0.1.8) (2026-04-01)
+
+
+### Features
+
+* bundle Windows App SDK runtime (self-contained deploy) ([1c94cfd](https://github.com/Nagell/deduplicate/commit/1c94cfdce0cbbca0fcdd129764d30302d85d0ce9))
+
+
+### Documentation
+
+* remove Windows App SDK runtime prerequisite (now self-contained) ([2dc24de](https://github.com/Nagell/deduplicate/commit/2dc24de644b7bb40ea31e2a2ed9c5876e90e8fd1))
+
 ## [0.1.7](https://github.com/Nagell/deduplicate/compare/v0.1.6...v0.1.7) (2026-04-01)
 
 
