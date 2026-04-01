@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.7](https://github.com/Nagell/deduplicate/compare/v0.1.6...v0.1.7) (2026-04-01)
+
+
+### Bug Fixes
+
+* copy XBF files to publish output so WinUI XAML loads correctly ([1ea1500](https://github.com/Nagell/deduplicate/commit/1ea1500a26ffa03ec59427755c59252fcbbf07fb))
+
 ## [0.1.6](https://github.com/Nagell/deduplicate/compare/v0.1.5...v0.1.6) (2026-04-01)
 
 
