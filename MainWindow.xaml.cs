@@ -17,5 +17,6 @@ public sealed partial class MainWindow : Window
         SetTitleBar(AppTitleBar);
 
         AppWindow.Resize(new Windows.Graphics.SizeInt32(1100, 750));
+        AppWindow.SetIcon(System.IO.Path.Combine(AppContext.BaseDirectory, "Assets", "logo.ico"));
     }
 }
