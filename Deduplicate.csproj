@@ -18,6 +18,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="Assets\logo.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.250205002" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1742" PrivateAssets="all" />
   </ItemGroup>
@@ -26,7 +33,7 @@
        to obj/Debug/… (no platform subdir). Explicitly include them so Roslyn sees
        InitializeComponent, x:Name fields, etc. during IntelliSense. -->
   <ItemGroup Condition="'$(DesignTimeBuild)' == 'true'">
-    <Compile Include="obj\**\*.g.i.cs" />
+    <Compile Include="obj\Debug\*\*.g.i.cs" />
   </ItemGroup>
 
   <!-- dotnet publish does not copy XBF (compiled XAML) files for WinUI 3 unpackaged apps.
