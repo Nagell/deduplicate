@@ -1,5 +1,24 @@
 # Changelog
 
+## [0.1.10](https://github.com/Nagell/deduplicate/compare/v0.1.9...v0.1.10) (2026-04-02)
+
+
+### Features
+
+* add project icon and wire up ApplicationIcon in csproj ([e830326](https://github.com/Nagell/deduplicate/commit/e830326a51e7a314f6b702a09551bf7b811dc397))
+* redesign logo to two-circle mark and add to title bar ([0393e02](https://github.com/Nagell/deduplicate/commit/0393e0248099d36e520c8d5bc946230271124422))
+* structure release zip with app/ subfolder and .bat launcher ([5d67584](https://github.com/Nagell/deduplicate/commit/5d675844d31f14948d7f7ccbb919a149f2ab201c))
+
+
+### Bug Fixes
+
+* scope design-time generated file glob to single directory level ([f3cfd58](https://github.com/Nagell/deduplicate/commit/f3cfd582a2a64b6b9c68f55d223086ef572f658d))
+
+
+### Documentation
+
+* add MSIX packaging and code signing research notes ([43d3877](https://github.com/Nagell/deduplicate/commit/43d38776d07aa94c5321d4b4bc6036f75768b1e2))
+
 ## [0.1.9](https://github.com/Nagell/deduplicate/compare/v0.1.8...v0.1.9) (2026-04-01)
 
 
