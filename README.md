@@ -1,12 +1,15 @@
 <a id="readme-top"></a>
 
 <!-- PROJECT SHIELDS -->
-[![CC BY-NC 4.0][license-shield]][license-url]
+[![MIT][license-shield]][license-url]
 [![.NET 9][net-shield]][net-url]
 [![Windows App SDK][winSDK-shield]][winSDK-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
 <div align="center">
+  <a href="https://github.com/Nagell/deduplicate">
+    <img src="./docs/logo.svg" alt="Logo" width="80" height="80">
+  </a>
   <h3 align="center">deduplicate</h3>
   <p align="center">
     A fast, native Windows 11 duplicate file finder — no installation required
@@ -143,7 +146,7 @@ Hash-based scans show live progress (MB/s + ETA) and can be cancelled at any tim
 <!-- LICENSE -->
 ## License
 
-Distributed under the CC BY-NC 4.0 License. See `LICENSE` for more information.
+Distributed under the MIT License. See `LICENSE` for more information.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -157,7 +160,7 @@ Project Link: [https://github.com/Nagell/deduplicate](https://github.com/Nagell/
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- MARKDOWN LINKS & IMAGES -->
-[license-shield]: https://img.shields.io/badge/License-CC%20BY--NC%204.0-lightgrey.svg?style=for-the-badge
+[license-shield]: https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge
 [license-url]: ./LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/dawidnitka
