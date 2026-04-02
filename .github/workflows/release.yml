@@ -59,7 +59,11 @@ jobs:
 
       - name: Zip artifact
         run: |
-          Compress-Archive -Path ./publish/* `
+          New-Item -ItemType Directory -Path ./dist/app -Force
+          Copy-Item -Path ./publish/* -Destination ./dist/app/ -Recurse
+          '@echo off' | Out-File -FilePath ./dist/Deduplicate.bat -Encoding ascii
+          'start "" "%~dp0app\Deduplicate.exe"' | Add-Content -Path ./dist/Deduplicate.bat -Encoding ascii
+          Compress-Archive -Path ./dist/* `
             -DestinationPath ./Deduplicate-v${{ needs.release-please.outputs.version }}-win-x64.zip
 
       - name: Append prerequisites to release notes
@@ -68,7 +72,7 @@ jobs:
         run: |
           $tag = "${{ needs.release-please.outputs.tag_name }}"
           $current = (gh release view $tag --json body -q ".body")
-          $footer = "`n---`n`n## Installation`n`n1. Right-click the downloaded zip → **Properties** → at the bottom, check **Unblock** → OK`n2. Extract the zip and run ``Deduplicate.exe```n`n> **Windows App SDK runtime required** — download from [Microsoft](https://learn.microsoft.com/en-us/windows/apps/windows-app-sdk/downloads) if the app fails to start. .NET 9 is bundled; no separate install needed.`n`n> **App won't start after installing the runtime?** If you skipped step 1, Windows may block the app's files. Repeat step 1, then re-extract.`n`n> **SmartScreen warning:** click *More info* → *Run anyway*. The app is unsigned — this warning appears for all unsigned executables."
+          $footer = "`n---`n`n## Installation`n`n1. Right-click the downloaded zip → **Properties** → at the bottom, check **Unblock** → OK`n2. Extract the zip and run ``Deduplicate.bat`` (or open the ``app`` folder and run ``Deduplicate.exe`` directly)`n`n> **Windows App SDK runtime required** — download from [Microsoft](https://learn.microsoft.com/en-us/windows/apps/windows-app-sdk/downloads) if the app fails to start. .NET 9 is bundled; no separate install needed.`n`n> **App won't start after installing the runtime?** If you skipped step 1, Windows may block the app's files. Repeat step 1, then re-extract.`n`n> **SmartScreen warning:** click *More info* → *Run anyway*. The app is unsigned — this warning appears for all unsigned executables."
           ($current + $footer) | Out-File -FilePath notes.md -Encoding utf8
           gh release edit $tag --notes-file notes.md
 
